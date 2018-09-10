@@ -1,0 +1,21 @@
+.spinner:before {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 60px;
+    width: 60px;
+    background: rgba(0,0,0,.0);
+    border-radius: 50%;
+    border: 3px solid #fff; 
+    border-top-color: #bdbdbd;
+    border-bottom: 3px solid #cacaca; 
+    animation: spin 1.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
