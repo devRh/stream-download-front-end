@@ -20,11 +20,12 @@ export const fetchAllTaxiTrip = (page, sizePerPage) => {
       })
         .then(response => {
             dispatch(fetchTaxiTrips(response.data))
+            console.log('')
         })
         .catch(err => {
           dispatch({
             type: FAILED_FETCH_TAXI_TRIP,
-            payload:err
+            payload:{'error':err}
           })
         });
     };

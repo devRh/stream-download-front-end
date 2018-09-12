@@ -20,23 +20,26 @@ import './table.css';
   }
 
   componentWillMount() {
-    this.fetchTaxiTrip();
+    this.fetchTaxiTrip(this.state.page, this.state.sizePerPage);
   }
 
-  fetchTaxiTrip(page = this.state.page, sizePerPage = this.state.sizePerPage) {
-    this.props.fetchAllTaxiTrip(page, sizePerPage);
+  fetchTaxiTrip(page, sizePerPage) {
+      this.props.fetchAllTaxiTrip(page, sizePerPage);
   }
 
   handlePageChange(page, sizePerPage) {
-    this.setState({page});
-    this.fetchTaxiTrip(page, sizePerPage);
+    if (page !== this.state.page) {
+      this.fetchTaxiTrip(page, sizePerPage);
+      this.setState({page});
+    }
   }
-
+  
   handleSizePerPageChange(sizePerPage) {
-    this.setState({sizePerPage})
+    this.setState({page: 1, sizePerPage})
     this.fetchTaxiTrip(1, sizePerPage);
+    
   }
-
+  
   renderShowsTotal(start, to, total) {
     return (
       <p style={ { color: 'blue' } }>
@@ -50,6 +53,7 @@ import './table.css';
     console.log("props------->",this.props);
 
     const options = {
+      noDataText: (this.props.error?('There is no data to display : '+ this.props.error):<div className="spinner"/>),
       onPageChange: this.handlePageChange,
       onSizePerPageList: this.handleSizePerPageChange,
       page: this.state.page,
@@ -74,21 +78,24 @@ import './table.css';
       paginationShowsTotal: this.renderShowsTotal,  
       paginationPosition: 'top' 
     };
-
-    return !this.props.count ? (
-      <div className="spinner"/>
-      ) :
-    <BootstrapTable data={ this.props.data }
-          keyField='_id' 
-          pagination
-          fetchInfo={{dataTotalSize: this.props.count}}
-          remote
-          options={ options }
-        >
-            <TableHeaderColumn dataField='VendorID'>Vendor-id</TableHeaderColumn>
-            <TableHeaderColumn dataField='PULocationID'>Pick-up location</TableHeaderColumn>
-            <TableHeaderColumn dataField='DOLocationID'>Drop-off location</TableHeaderColumn>
-        </BootstrapTable>
+    return (
+    <div style={{'margin': '3vw'}}>
+      <h1> Yellow Taxi Trip Data </h1>
+      <button className="btn btn-success">Download as excel</button>
+      <BootstrapTable data={ this.props.data }
+            keyField='_id'
+            options={ options } 
+            fetchInfo={{dataTotalSize: this.props.count}}
+            remote
+            pagination
+            striped
+          >
+              <TableHeaderColumn dataField='VendorID'>Vendor-id</TableHeaderColumn>
+              <TableHeaderColumn dataField='PULocationID'>Pick-up location</TableHeaderColumn>
+              <TableHeaderColumn dataField='DOLocationID'>Drop-off location</TableHeaderColumn>
+      </BootstrapTable>
+    </div>
+    )    
 }
 
 }  

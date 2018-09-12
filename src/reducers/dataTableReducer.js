@@ -7,7 +7,7 @@ export default (state = initialState, action) => {
      case SUCCESS_FETCH_TAXI_TRIP:
       return action.taxiTrips;
      case FAILED_FETCH_TAXI_TRIP:
-      return state; 
+      return action.payload; 
      default:
       return state
     }
