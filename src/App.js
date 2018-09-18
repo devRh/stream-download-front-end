@@ -8,7 +8,9 @@ import CustomPaginationTable from './components/table';
 class App extends Component {
   render() {
     return (
-        <CustomPaginationTable/> 
+        <div>
+          <CustomPaginationTable/> 
+        </div>
     );
   }
 }
