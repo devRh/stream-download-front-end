@@ -13,7 +13,7 @@ class Download extends Component {
     
     render() {
         return (
-            <ExcelFile element={<button className="btn btn-success" ><i class="fa fa-download"></i> Download as excel</button>}>
+            <ExcelFile element={<button className="btn btn-success" ><i className="fa fa-download"></i> Download as excel</button>}>
                 <ExcelSheet dataSet={this.props.data} name="Organization"/>
             </ExcelFile>
         );

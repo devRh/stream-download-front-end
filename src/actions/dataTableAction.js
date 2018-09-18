@@ -20,7 +20,6 @@ export const fetchAllTaxiTrip = (page, sizePerPage) => {
       })
         .then(response => {
             dispatch(fetchTaxiTrips(response.data))
-            console.log('')
         })
         .catch(err => {
           dispatch({

@@ -5,7 +5,7 @@ import { fetchAllTaxiTrip } from '../actions/dataTableAction';
 import Download from './excelExportButton';
 import './table.css';
 
- class CustomPaginationTable extends Component {
+class CustomPaginationTable extends Component {
 
 
   constructor(props) {
@@ -25,96 +25,97 @@ import './table.css';
   }
 
   fetchTaxiTrip(page, sizePerPage) {
-      this.props.fetchAllTaxiTrip(page, sizePerPage);
+    this.props.fetchAllTaxiTrip(page, sizePerPage);
   }
 
   handlePageChange(page, sizePerPage) {
     if (page !== this.state.page) {
       this.fetchTaxiTrip(page, sizePerPage);
-      this.setState({page});
+      this.setState({ page });
     }
   }
-  
+
   handleSizePerPageChange(sizePerPage) {
-    this.setState({page: 1, sizePerPage})
+    this.setState({ page: 1, sizePerPage })
     this.fetchTaxiTrip(1, sizePerPage);
-    
+
   }
-  
+
   renderShowsTotal(start, to, total) {
     return (
-      <p style={ { color: 'blue' } }>
-      Showing { start } to { to } of { total }&nbsp;&nbsp; Results<br/>
+      <p style={{ color: 'blue' }}>
+        Showing {start} to {to} of {total}&nbsp;&nbsp; Results<br />
       </p>
     );
   }
 
   render() {
-    console.log("state------>",this.state)
-    console.log("props------->",this.props);
+    console.log("state------>", this.state)
+    console.log("props------->", this.props);
 
     const exelData = [
-        {
-            columns: ["VendorID", "PULocationID", "DOLocationID"],
-            data:this.props.data.map((items)=>{
-              return [items.VendorID, items.PULocationID, items.DOLocationID]
-            })
-        }
-    ];  
+      {
+        columns: ["VendorID", "PULocationID", "DOLocationID"],
+        data: this.props.data.map((items) => {
+          return [items.VendorID, items.PULocationID, items.DOLocationID]
+        })
+      }
+    ];
 
     const options = {
-      noDataText: (this.props.error?('There is no data to display : '+ this.props.error):<div className="spinner"/>),
+      noDataText: (this.props.error ? ('There is no data to display : ' + this.props.error) : <div className="spinner" />),
       onPageChange: this.handlePageChange,
       onSizePerPageList: this.handleSizePerPageChange,
       page: this.state.page,
-      sizePerPage: this.state.sizePerPage,  
-      sizePerPageList: [ {
+      sizePerPage: this.state.sizePerPage,
+      sizePerPageList: [{
         text: '5', value: 5
       }, {
         text: '10', value: 10
       }, {
         text: '15', value: 15
-      } ],  
+      }],
       pageStartIndex: 1,
-      paginationSize: 3, 
-      prePage: 'Prev', 
-      nextPage: 'Next', 
-      firstPage: '1...', 
+      paginationSize: 3,
+      prePage: 'Prev',
+      nextPage: 'Next',
+      firstPage: '1...',
       lastPage: !this.props.count ? "..." : ("..." + Math.ceil(this.props.count / this.state.sizePerPage).toString()),
-      prePageTitle: 'Go to previous', 
-      nextPageTitle: 'Go to next', 
-      firstPageTitle: 'Go to first', 
-      lastPageTitle: 'Go to Last', 
-      paginationShowsTotal: this.renderShowsTotal,  
-      paginationPosition: 'top' 
+      prePageTitle: 'Go to previous',
+      nextPageTitle: 'Go to next',
+      firstPageTitle: 'Go to first',
+      lastPageTitle: 'Go to Last',
+      paginationShowsTotal: this.renderShowsTotal,
+      paginationPosition: 'top'
     };
     return (
-    <div style={{'margin': '3vw'}}>
-      <h1> Yellow Taxi Trip Data </h1>
-      <Download data = {exelData}>
-        <span className="icon"></span>  
-      </Download>
-      <BootstrapTable data={ this.props.data }
-            keyField='_id'
-            options={ options } 
-            fetchInfo={{dataTotalSize: this.props.count}}
-            remote
-            pagination
-            striped
-          >
-              <TableHeaderColumn dataField='VendorID'>Vendor-id</TableHeaderColumn>
-              <TableHeaderColumn dataField='PULocationID'>Pick-up location</TableHeaderColumn>
-              <TableHeaderColumn dataField='DOLocationID'>Drop-off location</TableHeaderColumn>
-      </BootstrapTable>
-    </div>
-    )    
-}
+      <div style={{ 'margin': '3vw' }}>
+        <h1> Yellow Taxi Trip Data </h1>
+        <Download data={exelData}>
+          <span className="icon"></span>
+        </Download>
+        <BootstrapTable data={this.props.data}
+          version='4'
+          keyField='_id'
+          options={options}
+          fetchInfo={{ dataTotalSize: this.props.count }}
+          remote
+          pagination
+          striped
+        >
+          <TableHeaderColumn dataField='VendorID'>Vendor-id</TableHeaderColumn>
+          <TableHeaderColumn dataField='PULocationID'>Pick-up location</TableHeaderColumn>
+          <TableHeaderColumn dataField='DOLocationID'>Drop-off location</TableHeaderColumn>
+        </BootstrapTable>
+      </div>
+    )
+  }
 
-}  
+}
 
 
 const mapStateToProps = state => ({
   ...state.dataTable
 })
 
-export default connect(mapStateToProps, {fetchAllTaxiTrip})(CustomPaginationTable);
+export default connect(mapStateToProps, { fetchAllTaxiTrip })(CustomPaginationTable);
