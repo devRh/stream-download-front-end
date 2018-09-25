@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { connect } from 'react-redux';
 import { fetchAllTaxiTrip } from '../actions/dataTableAction';
-import Download from './excelExportButton';
 import './table.css';
 
 class CustomPaginationTable extends Component {
@@ -12,6 +11,7 @@ class CustomPaginationTable extends Component {
     super(props);
 
     this.state = {
+      downloadExcelButtonActive: true,
       page: 1,
       sizePerPage: 5,
     };
@@ -53,15 +53,6 @@ class CustomPaginationTable extends Component {
     console.log("state------>", this.state)
     console.log("props------->", this.props);
 
-    const exelData = [
-      {
-        columns: ["VendorID", "PULocationID", "DOLocationID"],
-        data: this.props.data.map((items) => {
-          return [items.VendorID, items.PULocationID, items.DOLocationID]
-        })
-      }
-    ];
-
     const options = {
       noDataText: (this.props.error ? ('There is no data to display : ' + this.props.error) : <div className="spinner" />),
       onPageChange: this.handlePageChange,
@@ -91,9 +82,11 @@ class CustomPaginationTable extends Component {
     return (
       <div style={{ 'margin': '3vw' }}>
         <h1> Yellow Taxi Trip Data </h1>
-        <Download data={exelData}>
-          <span className="icon"></span>
-        </Download>
+
+        <a className="btn btn-success" href='http://localhost:5555/taxiTrips'>
+          <i className="fa fa-download"></i> Download as excel
+        </a>
+
         <BootstrapTable data={this.props.data}
           version='4'
           keyField='_id'
