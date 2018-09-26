@@ -83,7 +83,7 @@ class CustomPaginationTable extends Component {
       <div style={{ 'margin': '3vw' }}>
         <h1> Yellow Taxi Trip Data </h1>
 
-        <a className="btn btn-success" href='https://stream-download-back-end.herokuapp.com/taxitrips/download'>
+        <a className="btn btn-success" href="http://localhost:5555/taxitrips/download">
           <i className="fa fa-download"></i> Download as excel
         </a>
 

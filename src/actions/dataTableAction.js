@@ -2,7 +2,6 @@ import { SUCCESS_FETCH_TAXI_TRIP, FAILED_FETCH_TAXI_TRIP } from './types';
 import axios from 'axios';
 
 const apiUrl = 'https://stream-download-back-end.herokuapp.com/taxiTrips';
-//const apiUrl = 'http://localhost:5555/taxiTrips';
 
 
 const fetchTaxiTrips = (taxiTrips) => {
